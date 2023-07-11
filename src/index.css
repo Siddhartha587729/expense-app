@@ -402,6 +402,7 @@ select {
 
 /* dashboard */
 .dashboard {
+  padding: var(--space-md);
   display: -ms-grid;
   display: grid;
   gap: var(--space-lg);
