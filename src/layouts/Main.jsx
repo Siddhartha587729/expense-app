@@ -17,7 +17,6 @@ const Main = () => {
         <div className="layout">
             <Nav userName = {userName} />
             <Outlet/>
-            <div>Main</div>
             <img src={wave} alt="footer here" />
         </div>
         

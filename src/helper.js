@@ -37,9 +37,9 @@ export const createExpense = ({ name , amount, budgetId})=>{
     JSON.stringify([...existingExpenses, newItem]))
 }
 
-export const deleteItem = ({key})=>{
+/* export const deleteItem = ({key})=>{
     return localStorage.removeItem(key)
-}
+} */
 
 //formatting
 
@@ -77,4 +77,13 @@ export const formatPercentage=(amt)=>{
 export const getAllMatchingItems=({category, key, value})=>{
     const data = fetchData(category) ?? [];
     return data.filter((item)=> item[key]===value);
+}
+
+export const deleteItem = ({key,id})=>{
+    const existingData = fetchData(key);
+    if(id){
+        const newData = existingData.filter((item)=> item.id !== id);
+        return localStorage.setItem(key, JSON.stringify(newData));
+    }
+    return localStorage.removeItem(key);
 }

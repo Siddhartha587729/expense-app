@@ -1,14 +1,15 @@
 import React from 'react'
 import ExpenseItems from './ExpenseItems'
 
-function Table({expenses}) {
+function Table({expenses, showBudget = true}) {
   return (
     <div className='table'>
         <table>
             <thead>
                 <tr>
                     {
-                        ["Name", "Amount", "Date","Budget",""].map((i,index)=>(
+                        ["Name", "Amount", "Date",showBudget ?
+                        "Budget" : "" ,""].map((i,index)=>(
                             <th key={index}>{i}</th>
                         ))
                     }
@@ -19,7 +20,7 @@ function Table({expenses}) {
                     expenses.map((expense)=>(
                         <tr key = {expense.id}>
                             {/* {expense.name} */}
-                            <ExpenseItems expense={expense}/>
+                            <ExpenseItems expense={expense} showBudget={showBudget}/>
                         </tr>
                     ))
                 }
