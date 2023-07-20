@@ -1,9 +1,9 @@
 const generateRandomColor = ()=>{
-    const existingBudgetsLenght = fetchData("budgets") ?. length ?? 0;
+    const existingBudgetsLenght =  fetchData("budgets") ?. length ?? 0;
     return `${existingBudgetsLenght * 34} 65% 50%`
 }
 
-export const waait = ()=> new Promise(res=> setTimeout(res,Math.random()*2000))
+export const waait = ()=> new Promise(res=> setTimeout(res,Math.random()*800))
 
 
 export const fetchData = (key)=>{
@@ -29,7 +29,7 @@ export const createExpense = ({ name , amount, budgetId})=>{
         id : crypto.randomUUID(),
         name: name,
         createAt: Date.now(),
-        amount: +amount,//this + is convert string to number
+        amount: +amount,     //this + is convert string to number
         budgetId: budgetId
     }
     const existingExpenses = fetchData("expenses") ?? [];
@@ -39,4 +39,42 @@ export const createExpense = ({ name , amount, budgetId})=>{
 
 export const deleteItem = ({key})=>{
     return localStorage.removeItem(key)
+}
+
+//formatting
+
+export const formatDateToLocaleString = (epoch) => 
+new Date(epoch).toLocaleDateString();
+
+export const formatCurrency = (amt) => {
+    return amt.toLocaleString(undefined, {
+        style: "currency",
+        currency: "INR"
+    })
+}
+
+export const calculateSpentByBudget = (budgetId) =>{
+    const expenses = fetchData("expenses") ?? [];
+    const budgetSpent = expenses.reduce((acc, expense)=>{
+        if(expense.budgetId !== budgetId) return acc
+
+        return acc+= expense.amount
+    },0)
+    return budgetSpent;
+}
+
+//percentage
+
+export const formatPercentage=(amt)=>{
+    return amt.toLocaleString(undefined, {
+        style: "percent",
+        minimumFractionDigits: 0
+    })
+}
+
+//Get all items from local storage
+
+export const getAllMatchingItems=({category, key, value})=>{
+    const data = fetchData(category) ?? [];
+    return data.filter((item)=> item[key]===value);
 }
